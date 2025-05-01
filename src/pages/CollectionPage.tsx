@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ApiClient from "@/lib/api";
@@ -35,7 +36,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PaginatedResponse } from "@/types";
+interface PaginatedResponse<T> {
+  data: T[];
+  meta?: {
+    current_page: number;
+    from: number;
+    last_page: number;
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+  };
+  links?: {
+    first: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+  };
+}
 
 interface Collection {
   id: number;
