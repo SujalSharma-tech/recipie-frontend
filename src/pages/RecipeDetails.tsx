@@ -20,13 +20,10 @@ import {
   Heart,
   Bookmark,
   Edit,
-  Play,
   Check,
-  Share2,
   FolderPlus,
   Loader2,
   Trash2,
-  AlertCircle,
   MoreVertical,
   Send,
   MessageCircle,
@@ -116,7 +113,7 @@ export default function RecipeDetailPage() {
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editCommentText, setEditCommentText] = useState("");
-  const [comments, setComments] = useState<any[]>([]);
+  const [, setComments] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -291,9 +288,12 @@ export default function RecipeDetailPage() {
     setIsSubmittingComment(true);
 
     try {
-      const response = await ApiClient.post(`/recipes/${id}/comments`, {
-        content: commentText,
-      });
+      const response = await ApiClient.post<{ comment: any }>(
+        `/recipes/${id}/comments`,
+        {
+          content: commentText,
+        }
+      );
 
       const newComment = response.comment;
       setComments((prev) => [...prev, newComment]);
@@ -325,7 +325,7 @@ export default function RecipeDetailPage() {
     if (!user || !editCommentText.trim()) return;
 
     try {
-      const response = await ApiClient.put(
+      const response = await ApiClient.put<{ comment: any }>(
         `/recipes/${id}/comments/${commentId}`,
         {
           content: editCommentText,
@@ -711,14 +711,45 @@ export default function RecipeDetailPage() {
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold">Ingredients</h2>
                 <ul className="space-y-2">
-                  {ingredients.map((ingredient, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <div className="h-6 w-6 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3.5 w-3.5 text-muted-foreground" />
-                      </div>
-                      <span>{ingredient}</span>
-                    </li>
-                  ))}
+                  {ingredients.map(
+                    (
+                      ingredient:
+                        | string
+                        | number
+                        | bigint
+                        | boolean
+                        | React.ReactElement<
+                            unknown,
+                            string | React.JSXElementConstructor<any>
+                          >
+                        | Iterable<React.ReactNode>
+                        | React.ReactPortal
+                        | Promise<
+                            | string
+                            | number
+                            | bigint
+                            | boolean
+                            | React.ReactPortal
+                            | React.ReactElement<
+                                unknown,
+                                string | React.JSXElementConstructor<any>
+                              >
+                            | Iterable<React.ReactNode>
+                            | null
+                            | undefined
+                          >
+                        | null
+                        | undefined,
+                      index: React.Key | null | undefined
+                    ) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <div className="h-6 w-6 rounded-full border flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Check className="h-3.5 w-3.5 text-muted-foreground" />
+                        </div>
+                        <span>{ingredient}</span>
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
 
@@ -727,7 +758,7 @@ export default function RecipeDetailPage() {
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold">Steps</h2>
                 <ol className="space-y-6">
-                  {instructions.map((step, index) => (
+                  {instructions.map((step: string, index: number) => (
                     <li key={index} className="flex gap-4">
                       <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-medium">
                         {index + 1}
@@ -771,7 +802,7 @@ export default function RecipeDetailPage() {
                       {key.charAt(0).toUpperCase() + key.slice(1)}
                     </div>
                     <div className="font-medium">
-                      {value}
+                      {String(value)}
                       {key.charAt(0).toUpperCase() + key.slice(1) == "Calories"
                         ? "Kcal"
                         : "g"}

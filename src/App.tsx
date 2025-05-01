@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,13 +15,13 @@ import RegisterPage from "./pages/RegisterPage";
 import RecipesPage from "./pages/Recipes";
 import CreateRecipePage from "./pages/CreateRecipe";
 import RecipeDetailPage from "./pages/RecipeDetails";
-import CollectionsPage from "./pages/CollectionPage"; 
+import CollectionsPage from "./pages/CollectionPage";
 import FavoritesPage from "./pages/FavoritePage";
-import { Toaster } from "@/components/ui/sonner-toast"; 
-import EditProfilePage from "./pages/EditProfilePage"; 
-import SingleCollectionPage from "./pages/SingleCollectionPage"; 
-import AddRecipesToCollectionPage from "./pages/AddRecipesToCollectionPage"; 
-import EditRecipePage from "./pages/EditRecipePage"; 
+import { Toaster } from "@/components/ui/sonner-toast";
+import EditProfilePage from "./pages/EditProfilePage";
+import SingleCollectionPage from "./pages/SingleCollectionPage";
+import AddRecipesToCollectionPage from "./pages/AddRecipesToCollectionPage";
+import EditRecipePage from "./pages/EditRecipePage";
 
 // Protected route wrapper
 import ProtectedRoute from "./components/ProtectedRoute";

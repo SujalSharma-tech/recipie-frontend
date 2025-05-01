@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
@@ -20,6 +20,8 @@ import { toast } from "sonner";
 import ShareRecipeDialog from "@/components/share-recipe-dialog";
 
 export interface Recipe {
+  likes_count?: number;
+  views?: number;
   id: number;
   title: string;
   description: string | null;

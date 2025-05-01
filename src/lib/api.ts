@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 // src/lib/api.ts
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api"; // Update with your API URL
 
-interface ApiError {
-  message: string;
-  errors?: Record<string, string[]>;
-}
 
 class ApiClient {
   private static token: string | null = localStorage.getItem("auth_token");

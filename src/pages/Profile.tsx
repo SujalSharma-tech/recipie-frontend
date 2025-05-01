@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ApiClient from "@/lib/api";
@@ -25,14 +26,26 @@ import {
   BookOpen,
   Heart,
   FolderOpen,
-  Share2,
   Loader2,
   AlertCircle,
 } from "lucide-react";
 import ShareRecipeDialog from "@/components/share-recipe-dialog";
 import { formatDate } from "@/lib/utils";
 import { Recipe } from "./Home";
-import { PaginatedResponse } from "@/types";
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  current_page: number;
+  per_page: number;
+  last_page: number;
+  from: number | null;
+  to: number | null;
+  links?: {
+    url: string | null;
+    label: string;
+    active: boolean;
+  }[];
+}
 
 interface ProfileUser {
   id: number;
@@ -249,33 +262,6 @@ export default function ProfilePage() {
   };
 
   // Handle uploading a new cover image
-  const handleCoverUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!user || !event.target.files || event.target.files.length === 0) return;
-
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("cover", file);
-
-    try {
-      toast.loading("Uploading cover image...");
-      const response = await ApiClient.upload<{ user: ProfileUser }>(
-        `/users/${user.id}/cover`,
-        formData
-      );
-      setUser((prev) =>
-        prev ? { ...prev, cover_image: response.user.cover_image } : null
-      );
-      toast.success("Cover image updated successfully");
-    } catch (error: any) {
-      toast.error("Failed to update cover image", {
-        description: error.message || "Please try again",
-      });
-    } finally {
-      toast.dismiss();
-    }
-  };
 
   // Format image URLs
   const formatImageUrl = (path: string | null) => {
