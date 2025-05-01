@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler, Resolver } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "sonner";
 import ApiClient from "@/lib/api";
@@ -50,10 +51,10 @@ const recipeFormSchema = z.object({
   allow_copy: z.boolean().default(true),
   youtube_video: z.string().nullable(),
   nutrition: z.object({
-    calories: z.string().optional(),
-    fat: z.string().optional(),
-    carbs: z.string().optional(),
-    protein: z.string().optional(),
+    calories: z.string().default(""),
+    fat: z.string().default(""),
+    carbs: z.string().default(""),
+    protein: z.string().default(""),
   }),
   tags: z.array(z.string()).default([]),
 });
@@ -74,7 +75,7 @@ export default function CreateRecipePage() {
 
   // Initialize the form
   const form = useForm<RecipeFormValues>({
-    resolver: zodResolver(recipeFormSchema),
+    resolver: zodResolver(recipeFormSchema) as Resolver<RecipeFormValues>,
     defaultValues: {
       title: "",
       description: "",
@@ -157,7 +158,7 @@ export default function CreateRecipePage() {
   };
 
   // Handle form submission
-  const onSubmit = async (data: RecipeFormValues) => {
+  const onSubmit: SubmitHandler<RecipeFormValues> = async (data) => {
     if (!user) {
       toast.error("You must be logged in to create recipes");
       navigate("/auth/login");
@@ -209,7 +210,9 @@ export default function CreateRecipePage() {
       }
 
       // Send the recipe data to the API
-      const response = await ApiClient.upload("/recipes", formData);
+      const response = (await ApiClient.upload("/recipes", formData)) as {
+        recipe: { id: string | number };
+      };
 
       toast.success("Recipe created successfully!");
       navigate(`/recipes/${response.recipe.id}`);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ApiClient from "@/lib/api";
@@ -42,7 +43,6 @@ import {
   MoreHorizontal,
   Plus,
   X,
-  Heart,
   ArrowLeft,
   Loader2,
   AlertCircle,

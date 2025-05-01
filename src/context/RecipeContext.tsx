@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/context/RecipeContext.tsx
 import React, { createContext, useState, useContext, useCallback } from "react";
 import ApiClient from "@/lib/api";

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,7 +12,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Bookmark, Clock, ChefHat, Share2 } from "lucide-react";
+import { Bookmark, Clock, ChefHat } from "lucide-react";
 import { useRecipes } from "@/context/RecipeContext";
 import ApiClient from "@/lib/api";
 import { useAuth } from "@/lib/auth";

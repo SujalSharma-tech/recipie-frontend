@@ -16,13 +16,13 @@ import RegisterPage from "./pages/RegisterPage";
 import RecipesPage from "./pages/Recipes";
 import CreateRecipePage from "./pages/CreateRecipe";
 import RecipeDetailPage from "./pages/RecipeDetails";
-import CollectionsPage from "./pages/CollectionPage"; // Added import
-import FavoritesPage from "./pages/FavoritePage"; // Added import
-import { Toaster } from "@/components/ui/sonner-toast"; // Updated import!
-import EditProfilePage from "./pages/EditProfilePage"; // Added import
-import SingleCollectionPage from "./pages/SingleCollectionPage"; // Added import
-import AddRecipesToCollectionPage from "./pages/AddRecipesToCollectionPage"; // Added import
-import EditRecipePage from "./pages/EditRecipePage"; // Import the edit recipe page component
+import CollectionsPage from "./pages/CollectionPage"; 
+import FavoritesPage from "./pages/FavoritePage";
+import { Toaster } from "@/components/ui/sonner-toast"; 
+import EditProfilePage from "./pages/EditProfilePage"; 
+import SingleCollectionPage from "./pages/SingleCollectionPage"; 
+import AddRecipesToCollectionPage from "./pages/AddRecipesToCollectionPage"; 
+import EditRecipePage from "./pages/EditRecipePage"; 
 
 // Protected route wrapper
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -32,7 +32,6 @@ export default function App() {
     <Router>
       <AuthProvider>
         <RecipeProvider>
-          {/* Wrap the entire app content including Navbar in a React Fragment */}
           <>
             <Navbar />
             <main className="min-h-screen pt-16">
@@ -52,15 +51,6 @@ export default function App() {
                   path="/collections/:id/add-recipes"
                   element={<AddRecipesToCollectionPage />}
                 />
-                {/* <Route
-                  path="/collections/:id"
-                  element={<CollectionDetailPage />}
-                /> */}
-
-                {/* <Route
-                  path="/collections/:id/edit"
-                  element={<EditCollectionPage />}
-                /> */}
 
                 {/* Protected Routes */}
                 <Route element={<ProtectedRoute />}>

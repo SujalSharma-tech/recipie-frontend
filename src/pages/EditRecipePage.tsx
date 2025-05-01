@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -34,7 +35,6 @@ import {
   X,
   ChevronUp,
   ChevronDown,
-  Video,
   Loader2,
 } from "lucide-react";
 
@@ -77,7 +77,9 @@ export default function EditRecipePage() {
       setIsLoading(true);
 
       try {
-        const response = await ApiClient.get(`/recipes/${id}`);
+        const response = (await ApiClient.get(`/recipes/${id}`)) as {
+          recipe: any;
+        };
         const fetchedRecipe = response.recipe;
 
         if (user?.id !== fetchedRecipe.author_id) {
@@ -112,7 +114,7 @@ export default function EditRecipePage() {
 
         // Parse steps - focus on this field rather than instructions
         const parsedSteps = Array.isArray(fetchedRecipe.steps)
-          ? fetchedRecipe.steps.map((step) =>
+          ? fetchedRecipe.steps.map((step: string) =>
               // Remove numbering if present (like "1. Step description")
               step.replace(/^\d+\.\s*/, "")
             )

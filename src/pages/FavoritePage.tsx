@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ApiClient from "@/lib/api";
@@ -30,7 +31,21 @@ import {
   AlertCircle,
 } from "lucide-react";
 import ShareRecipeDialog from "@/components/share-recipe-dialog";
-import { PaginatedResponse } from "@/types";
+type PaginatedResponse<T> = {
+  data: T[];
+  meta?: {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+  };
+  links?: {
+    first: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+  };
+};
 import { Recipe } from "./Home";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
